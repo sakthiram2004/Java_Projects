@@ -47,9 +47,31 @@ public class BinarySearchTree {
             System.out.print(root.val + " ");
             inOrder(root.right);
         }
+    }
 
+    public Node search(Node root,int val){
+        if(root == null || root.val == val){
+            return root;
+        }
+        if(root.val > val) return search(root.left,val);
+        else return search(root.right,val);
+    }
 
-
+    public Node delete(Node root,int val){
+        if(root == null) return root;
+        if(root.val > val){
+            root.left = delete(root.left,val);
+        }
+        else if(root.val < val){
+            root.right = delete(root.right,val);
+        }
+        else {
+            if(root.left == null) return root.right;
+            else if (root.right == null) return root.left;
+            root.val = min(root.right);
+            root.right = delete(root.right, root.val);
+        }
+        return root;
     }
 }
 
@@ -62,8 +84,11 @@ class MyMain{
         bst.insert(40);
         bst.insert(10);
         bst.insert(55);
+        if(bst.search(bst.root,90)==null) System.out.println("not found");
+        else System.out.println("found");
+        bst.display(bst.root,40);
 
-        bst.display();
+
 
 
     }
